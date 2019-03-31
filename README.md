@@ -1,7 +1,7 @@
 # os_project1
 
 1. Assume the struct process ready time is already sorted before passing to the input of schedule functions.
-   Therefore main.c should sort the process.\
+   Therefore main.c should sort the process. 
 
 2. There are 4 functions RR, FIFO, SJF, PSJF to do.\
    There will be 2 parameters pass to these functions, one represents the process structure(include "process.h"), and another is the maximum time that a process can run.\

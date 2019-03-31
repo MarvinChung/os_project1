@@ -58,13 +58,14 @@ int RR_scheduling_table(struct process *proc, int nproc, int time)
     int running = -1;
     int exec_time = 0, ans_idx = 0;
     
+    int end_p = 0;
     int p_count = 0;
     int *p_queue = malloc(nproc * sizeof(int));
     for(int j = 0;j<nproc;j++){
         p_queue[j] = 0;
     }
 
-    while(1){
+    while(end_p < nproc){
         if(p_count < nproc){
             for(int p = 0;p < nproc;p++){
                 if(proc[p].t_ready == i && p_queue[p] == 0){
@@ -92,14 +93,15 @@ int RR_scheduling_table(struct process *proc, int nproc, int time)
             }
             exec_time ++;
 
-            if(exec_time == time){
+            if(exec_time == time && exec_time < proc[running_p].t_exec){
                 proc[running_p].t_exec -= time;
                 running = -1;
                 insert(running_p);
             }
-            else if(exec_time > proc[running_p].t_exec){
+            else if(exec_time >= proc[running_p].t_exec){
                 proc[running_p].t_exec = 0;
                 running = -1;
+                end_p ++;
             }
             
         }

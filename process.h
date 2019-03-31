@@ -16,7 +16,7 @@
 
 struct process{
     char name[32];
-    int t_ready, t_exec;
+    int t_ready, t_exec, task_i;
     pid_t pid;	
 };
 

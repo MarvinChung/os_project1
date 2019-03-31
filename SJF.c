@@ -163,4 +163,5 @@ int SJF(struct process *p, int consumed_limits)
 
 		e_length++;
 	}
+	return e_length
 }

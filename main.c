@@ -10,6 +10,15 @@
 #include "process.h"
 #include "scheduler.h"
 
+int cmp(const void *a, const void *b){
+	struct process *A, *B;
+	A = (struct process *)a;
+	B = (struct process *)b;
+	if(A->t_ready == B->t_ready)
+		return A->t_exec - B->t_exec;
+	return A->ready - B->ready;
+}
+
 int main(int argc, char *argv[]){
 	char sched_policy[256];
 	int policy;
@@ -42,7 +51,8 @@ int main(int argc, char *argv[]){
 	}
 
 	qsort(proc, nproc, sizeof(struct process), cmp);
-    for(int i = 0; i < nproc; i++)
-    	proc[i].task_i = i;
+        for(int i = 0; i < nproc; i++)
+    	    proc[i].task_i = i;
+	
 	scheduling(proc, nproc, policy);
 }

@@ -1,11 +1,12 @@
 # os_project1
 
-1. Assume the struct process ready time is already sorted before passing to the input of schedule functions.
-   Therefore main.c should sort the process. 
+1. Processes are sorted in ascending order respect to ready time, if tied, execution time is considered(cmp in main.c).
 
-2. There are 4 functions RR, FIFO, SJF, PSJF to do.\
-   There will be two parameters pass to these functions, one represents the process structure(include "process.h"), and another is the maximum time that a process can run. You can add or reduce any parameters you want just contact the one who write the main.c. or add on this readme and show what you expect.\
-   The process structure will be sorted by ready time (ascend order). If the ready time is same. It will sorted by the burst time. \
-   TODO: Finish the algorithm, then pass the correct process order into the task_list (which will be a global variable).\
-   the task_list is an element structure, which will be include inside the "scheduler.h". Return how many numbers you pass into the task_list.
-   
+2. The main function scans the input, sorts processes, decides the correct policy from the input and calls the subroutine scheduling to complete the quest. 
+
+3. There are 4 scheduling policies:round-robin(RR), first in, first out(FIFO), shortest job first(SJF), and preemptive shortest job first(PSJF).\
+   There will be at least two parameters for these functions, representing the process structure itself(included in "process.h") and the number of processes. You can freely add additional parameters if needed. 
+
+4. For the function scheduling, it first decides the complete execution configuration(represented by task_list in "scheduler.h") according to the policy and the process structure and then runs the processes according to the configuration. \
+   TODO: Finish all these four scheduling policies, and pass the correct process order to task_list (which will be a global variable).\
+   The task_list is an array of element structures, which is included in "scheduler.h". Return how many numbers you pass into the task_list.

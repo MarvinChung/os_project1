@@ -21,15 +21,6 @@ static int running;
 // Number of finish process
 static int finish_cnt;
 
-int cmp(const void *a, const void *b){
-	struct process *A, *B;
-	A = (struct process *)a;
-	B = (struct process *)b;
-	if(A->t_ready == B->t_ready)
-		return A->t_exec - B->t_exec;
-	return A->t_ready - B->t_ready;
-}
-
 int scheduling(struct process *proc, int nproc, int policy){
     int ntask;
 	if(policy == FIFO)

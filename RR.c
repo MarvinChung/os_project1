@@ -12,43 +12,43 @@ int rear = -1;
 int itemCount = 0;
 
 int peek() {
-   return intArray[front];
+    return intArray[front];
 }
 
 bool isEmpty() {
-   return itemCount == 0;
+    return itemCount == 0;
 }
 
 bool isFull() {
-   return itemCount == MAX;
+    return itemCount == MAX;
 }
 
 int size() {
-   return itemCount;
-}  
+    return itemCount;
+}
 
 void insert(int data) {
-
-   if(!isFull()) {
-	
-      if(rear == MAX-1) {
-         rear = -1;            
-      }       
-
-      intArray[++rear] = data;
-      itemCount++;
-   }
+    
+    if(!isFull()) {
+        
+        if(rear == MAX-1) {
+            rear = -1;
+        }
+        
+        intArray[++rear] = data;
+        itemCount++;
+    }
 }
 
 int pop() {
-   int data = intArray[front++];
-	
-   if(front == MAX) {
-      front = 0;
-   }
-	
-   itemCount--;
-   return data;  
+    int data = intArray[front++];
+    
+    if(front == MAX) {
+        front = 0;
+    }
+    
+    itemCount--;
+    return data;
 }
 
 int RR_scheduling_table(struct process *proc, int nproc, int time)
@@ -64,7 +64,7 @@ int RR_scheduling_table(struct process *proc, int nproc, int time)
     for(int j = 0;j<nproc;j++){
         p_queue[j] = 0;
     }
-
+    
     while(end_p < nproc){
         if(p_count < nproc){
             for(int p = 0;p < nproc;p++){
@@ -75,24 +75,23 @@ int RR_scheduling_table(struct process *proc, int nproc, int time)
                 }
             }
         }
-
-        if(!isEmpty())
-        {
-            if(running == -1){
-                running_p = pop();
-                exec_time = 0;
-                task_list[ans_idx].pid_index = running_p;
-                if(proc[running_p].t_exec < time){
-                    task_list[ans_idx].t_exec = proc[running_p].t_exec;
-                }
-                else{
-                    task_list[ans_idx].t_exec = time;
-                }
-                ans_idx ++;
-                running = 0;
+        
+        if(running == -1 && !isEmpty()){
+            running_p = pop();
+            exec_time = 0;
+            task_list[ans_idx].pid_index = running_p;
+            if(proc[running_p].t_exec < time){
+                task_list[ans_idx].t_exec = proc[running_p].t_exec;
             }
+            else{
+                task_list[ans_idx].t_exec = time;
+            }
+            ans_idx ++;
+            running = 0;
+        }
+        
+        if(running == 0){
             exec_time ++;
-
             if(exec_time == time && exec_time < proc[running_p].t_exec){
                 proc[running_p].t_exec -= time;
                 running = -1;
@@ -103,8 +102,8 @@ int RR_scheduling_table(struct process *proc, int nproc, int time)
                 running = -1;
                 end_p ++;
             }
-            
-        }
+        }  
+        
         i++;
     }
     return ans_idx;

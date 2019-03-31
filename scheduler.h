@@ -12,9 +12,11 @@
 #define PSJF  4
 
 struct element{
-	char name[32];
+	int pid_index;
 	int t_exec;
 };
+
+int cmp(const void *a, const void *b);
 
 int next_process(struct process *proc, int nproc, int policy);
 

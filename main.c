@@ -1,5 +1,3 @@
-// main.c
-
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +7,7 @@
 #include <unistd.h>
 #include "process.h"
 #include "scheduler.h"
+#include "FIFO.h"
 
 int cmp(const void *a, const void *b){
 	struct process *A, *B;
@@ -16,7 +15,7 @@ int cmp(const void *a, const void *b){
 	B = (struct process *)b;
 	if(A->t_ready == B->t_ready)
 		return A->t_exec - B->t_exec;
-	return A->ready - B->ready;
+	return A->t_ready - B->t_ready;
 }
 
 int main(int argc, char *argv[]){

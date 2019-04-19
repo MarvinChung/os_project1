@@ -2,16 +2,17 @@
 
 #define _GNU_SOURCE
 #include "process.h"
-#include <sched.>
+// #include <sched.>
 #include <errno.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/type.h>
+// #include <sys/type.h>
 #include <sys/syscall.h>
 #define GET_TIME 314
 #define PRINTK 315
 
+/*
 int proc_assign_cpu(int pid, int core){
 	if(core > sizeof(cpu_set_t)){
 	    fprintf(stderr, "Core index error.");
@@ -85,3 +86,4 @@ int proc_wakeup(int pid){
 
 	return ret;
 }
+*/

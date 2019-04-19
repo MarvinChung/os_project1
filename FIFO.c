@@ -1,12 +1,5 @@
 #define _GNU_SOURCE
-#include "process.h"
-#include "scheduler.h"
-#include <stdlib.h>
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sched.h>
+#include "FIFO.h"
 
 int FIFO_scheduling_table(struct process *proc, int nproc){
     for(int i = 0; i < nproc; i++){

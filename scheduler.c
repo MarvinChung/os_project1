@@ -1,16 +1,15 @@
 #define _GNU_SOURCE
 #include "process.h"
 #include "scheduler.h"
-#include "RR.h"
 #include "FIFO.h"
-#include "SJF.h"
-#include "PSJF.h"
 #include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sched.h>
+
+#define DEBUG_FIFO
 
 // Current unit time
 static int ntime; 
@@ -20,6 +19,8 @@ static int running;
 
 // Number of finish process
 static int finish_cnt;
+
+
 
 int scheduling(struct process *proc, int nproc, int policy){
     int ntask;
@@ -41,8 +42,8 @@ int scheduling(struct process *proc, int nproc, int policy){
 #endif
 
     for(int i = 0; i < ntask; i++){
-	printf("%s, time: %f \n", proc[task_list[i].pid_index].name
-	       , proc[task_list[i].t_exec]);
+	printf("%s, time: %d \n", proc[task_list[i].pid_index].name
+	       , task_list[i].t_exec);
     }
 	
 //    for(int i = 0; i < nproc; i++)
@@ -56,4 +57,5 @@ int scheduling(struct process *proc, int nproc, int policy){
     ntime = 0;
     running = -1;
     
+    return 1;
 }

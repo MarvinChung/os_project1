@@ -1,7 +1,8 @@
 #define _GNU_SOURCE
 #include "process.h"
 #include "scheduler.h"
-#include "FIFO.h"
+//#include "FIFO.h"
+#include "Tables.h"
 #include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
@@ -10,6 +11,10 @@
 #include <sched.h>
 
 #define DEBUG_FIFO
+#define DEBUG_RR
+#define DEBUG_SJF
+#define DEBUG_PSJF
+#define RR_TIMESLICE 500
 
 // Current unit time
 static int ntime; 
@@ -30,7 +35,7 @@ int scheduling(struct process *proc, int nproc, int policy){
 #endif
 #ifdef DEBUG_RR
 	if(policy == RR)
-		ntask = RR_scheduling_table(proc, nproc);
+		ntask = RR_scheduling_table(proc, nproc, RR_TIMESLICE);
 #endif
 #ifdef DEBUG_SJF
 	if(policy == SJF)

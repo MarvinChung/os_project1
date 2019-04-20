@@ -1,10 +1,11 @@
 #define _GNU_SOURCE
-#include "RR.h"
-#include "process.h"
-#include "scheduler.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
+//#include "RR.h"
+//#include "process.h"
+//#include "scheduler.h"
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdbool.h>
+#include "Tables.h"
 #define MAX 100000
 
 int intArray[MAX];
@@ -12,23 +13,23 @@ int front = 0;
 int rear = -1;
 int itemCount = 0;
 
-int peek() {
+static int peek() {
     return intArray[front];
 }
 
-bool isEmpty() {
+static bool isEmpty() {
     return itemCount == 0;
 }
 
-bool isFull() {
+static bool isFull() {
     return itemCount == MAX;
 }
 
-int size() {
+static int size() {
     return itemCount;
 }
 
-void insert(int data) {
+static void insert(int data) {
     
     if(!isFull()) {
         
@@ -41,7 +42,7 @@ void insert(int data) {
     }
 }
 
-int pop() {
+static int pop() {
     int data = intArray[front++];
     
     if(front == MAX) {

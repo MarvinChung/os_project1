@@ -2,17 +2,19 @@
 
 #define _GNU_SOURCE
 #include "process.h"
-// #include <sched.>
+#include <sched.h>
 #include <errno.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-// #include <sys/type.h>
+//#include <sys/type.h>
 #include <sys/syscall.h>
 #define GET_TIME 314
 #define PRINTK 315
 
-/*
+
+#define PRINTTIME 333
+
 int proc_assign_cpu(int pid, int core){
 	if(core > sizeof(cpu_set_t)){
 	    fprintf(stderr, "Core index error.");
@@ -47,10 +49,12 @@ int proc_exec(struct process proc){
             UNIT_T();
         }
         syscall(GET_TIME, &end_sec, &end_nsec);
-        sprintf(to_dmesg, "[project1] %d %lu.%09lu %lu.%09lu\n",
-        getpid(), start_sec, start_nsec, end_sec, end_nsec);
+        //sprintf(to_dmesg, "[project1] %d %lu.%09lu %lu.%09lu\n",
+        //getpid(), start_sec, start_nsec, end_sec, end_nsec);
 
-        syscall(PRINTK, to_dmesg);
+        //syscall(PRINTK, to_dmesg);
+        pid_t ch_pid = getpid();
+        syscall(PRINTTIME, ch_pid, start_sec, start_nsec, end_sec, end_nsec);
         exit(0);
 	}
 
@@ -86,4 +90,3 @@ int proc_wakeup(int pid){
 
 	return ret;
 }
-*/

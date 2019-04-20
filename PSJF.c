@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
-#include "PSJF.h"
-
+//#include "PSJF.h"
+#include "Tables.h"
 //min binary heap refer to: https://www.geeksforgeeks.org/binary-heap/
 
 // elements put in the heap
@@ -9,24 +9,24 @@ struct task {
 	int task_i; // task id of each task
 };
 
-int heap_size, capacity;
-struct task *harr; // the pointer point to the heap
+static int heap_size, capacity;
+static struct task *harr; // the pointer point to the heap
 
 // to get index of parent of node at index i
-int parent(int i) { return (i-1)/2; } 
+static int parent(int i) { return (i-1)/2; } 
 // to get index of left child of node at index i 
-int left(int i) { return (2*i + 1); } 
+static int left(int i) { return (2*i + 1); } 
 // to get index of right child of node at index i 
-int right(int i) { return (2*i + 2); }
+static int right(int i) { return (2*i + 2); }
 
 // A utility function to swap two elements
-void swap(struct task *x, struct task *y) {
+static void swap(struct task *x, struct task *y) {
 	struct task temp = *x;
 	*x = *y;
 	*y = temp;
 }
 
-void insertKey(int k, int pid) {
+static void insertKey(int k, int pid) {
 	if (heap_size == capacity) {
 		printf("\nOverflow: Could not insertKey\n");
 		return;
@@ -45,7 +45,7 @@ void insertKey(int k, int pid) {
 	} 
 }
 
-void MinHeapify(int i) { 
+static void MinHeapify(int i) { 
 	int l = left(i); 
 	int r = right(i); 
 	int smallest = i; 
@@ -59,7 +59,7 @@ void MinHeapify(int i) {
 	} 
 }
 
-struct task extractMin() {	
+static struct task extractMin() {	
 	if (heap_size == 1) {
 		heap_size--;
 		return harr[0];
@@ -74,7 +74,7 @@ struct task extractMin() {
 	return root; 
 }
 
-bool isEmpty(void) {
+static bool isEmpty(void) {
 	return (heap_size == 0);
 }
 

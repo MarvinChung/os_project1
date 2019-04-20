@@ -7,7 +7,10 @@
 #include <unistd.h>
 #include "process.h"
 #include "scheduler.h"
-#include "FIFO.h"
+//#include "FIFO.h"
+//#include "RR.h"
+//#include "SJF.h"
+//#include "PSJF.h"
 
 int cmp(const void *a, const void *b){
 	struct process *A, *B;
@@ -54,4 +57,6 @@ int main(int argc, char *argv[]){
     	    proc[i].task_i = i;
 	
 	scheduling(proc, nproc, policy);
+
+	// TODO: run the sheduled processes.
 }

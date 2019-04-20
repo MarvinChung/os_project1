@@ -1,8 +1,9 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "process.h"
-#include "scheduler.h"
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdbool.h>
+//#include "process.h"
+//#include "scheduler.h"
+#include "Tables.h"
 #include <limits.h>
 
 //min heap base on https://www.geeksforgeeks.org/binary-heap/
@@ -25,18 +26,18 @@ struct process{
 struct process harr[MAXLENGTH]; // pointer to array of elements in heap 
 int capacity = MAXLENGTH; // maximum possible size of min heap 
 int heap_size = 0; // Current number of elements in min heap
-void MinHeapify(int i);
-void swap(struct process *x, struct process *y);
+static void MinHeapify(int i);
+static void swap(struct process *x, struct process *y);
 
-int parent(int i) { return (i-1)/2; } 
+static int parent(int i) { return (i-1)/2; } 
   
 // to get index of left child of node at index i 
-int left(int i) { return (2*i + 1); } 
+static int left(int i) { return (2*i + 1); } 
   
 // to get index of right child of node at index i 
-int right(int i) { return (2*i + 2); } 
+static int right(int i) { return (2*i + 2); } 
 
-void insertKey(struct process *k) 
+static void insertKey(struct process *k) 
 { 
     if (heap_size == capacity) 
     { 
@@ -59,7 +60,7 @@ void insertKey(struct process *k)
   
 // Decreases value of key at index 'i' to new_val.  It is assumed that 
 // new_val is smaller than harr[i]. 
-void decreaseKey(int i, int new_val) 
+static void decreaseKey(int i, int new_val) 
 { 
     harr[i].t_exec = new_val; 
     while (i != 0 && harr[parent(i)].t_exec > harr[i].t_exec) 
@@ -70,7 +71,7 @@ void decreaseKey(int i, int new_val)
 } 
   
 // Method to remove minimum element (or root) from min heap 
-struct process extractMin() 
+static struct process extractMin() 
 { 
     if (heap_size <= 0)
     {
@@ -96,7 +97,7 @@ struct process extractMin()
   
 // This function deletes key at index i. It first reduced value to minus 
 // infinite, then calls extractMin() 
-void deleteKey(int i) 
+static void deleteKey(int i) 
 { 
     decreaseKey(i, INT_MIN); 
     extractMin(); 
@@ -104,7 +105,7 @@ void deleteKey(int i)
   
 // A recursive method to heapify a subtree with the root at given index 
 // This method assumes that the subtrees are already heapified 
-void MinHeapify(int i) 
+static void MinHeapify(int i) 
 { 
     int l = left(i); 
     int r = right(i); 
@@ -121,14 +122,14 @@ void MinHeapify(int i)
 } 
   
 // A utility function to swap two elements 
-void swap(struct process *x, struct process *y) 
+static void swap(struct process *x, struct process *y) 
 { 
     struct process temp = *x; 
     *x = *y; 
     *y = temp; 
 } 
 
-bool isEmpty()
+static bool isEmpty()
 {
 	return heap_size==0;
 }

@@ -1,5 +1,6 @@
 # os_project1
 
+### Notes
 1. Processes are sorted in ascending order respect to ready time, if tied, execution time is considered(cmp in main.c).
 
 2. The main function scans the input, sorts processes, decides the correct policy from the input and calls the subroutine scheduling to complete the quest. 
@@ -11,3 +12,17 @@
    TODO: Finish all these four scheduling policies, and pass the correct process order to task_list (which will be a global variable).\
    The task_list is an array of element structures, which is included in "scheduler.h". Return the number of elements( representing switches among processes) passed to the task_list for each scheduling policies. \
    Finish the function scheduling. 
+
+5. (b05902064, 4/20) Merged {RR.h, PSJF.h, SJF.h, FIFO.h} into Tables.h 
+
+### Compile
+- to compile, run
+```
+gcc *.c -o prog
+```
+
+### Execute
+- run
+```
+./prog < testdata
+```

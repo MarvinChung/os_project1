@@ -7,15 +7,15 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-//#include <sys/type.h>
+#include <sys/time.h>
 #include <sys/syscall.h>
-#define GET_TIME 314
+#define GET_TIME 96
 #define PRINTK 315
 
 
 #define PRINTTIME 333
 
-int proc_assign_cpu(int pid, int core){
+int proc_assign_cpu(pid_t pid, int core){
 	if(core > sizeof(cpu_set_t)){
 	    fprintf(stderr, "Core index error.");
         return -1;
@@ -26,15 +26,15 @@ int proc_assign_cpu(int pid, int core){
     CPU_SET(core, &mask);
 
     if(sched_setaffinity(pid, sizeof(mask), &mask) < 0){
-        perror("sched_seetaffinity");
+        perror("sched_setaffinity");
         exit(1);
     }
 
     return 0;
 }
 
-int proc_exec(struct process proc){
-	int pid = fork();
+pid_t proc_exec(struct process proc){
+	pid_t pid = fork();
 
 	if(pid < 0){
 	    perror("fork");
@@ -42,19 +42,20 @@ int proc_exec(struct process proc){
 	}
 
 	if(pid == 0){
-        unsigned long start_sec, start_nsec, end_sec, end_nsec;
-        char to_dmesg[256];
-        syscall(GET_TIME, &start_sec, &start_nsec);
+        //unsigned long start_sec, start_nsec, end_sec, end_nsec;
+        struct timeval start_tv, end_tv;
+        pid_t ch_pid = getpid();
+        proc_assign_cpu(ch_pid, CHILD_CPU);
+        
+        syscall(GET_TIME, &start_tv, NULL);
         for(int i = 0; i < proc.t_exec; i++){
             UNIT_T();
         }
-        syscall(GET_TIME, &end_sec, &end_nsec);
-        //sprintf(to_dmesg, "[project1] %d %lu.%09lu %lu.%09lu\n",
-        //getpid(), start_sec, start_nsec, end_sec, end_nsec);
-
-        //syscall(PRINTK, to_dmesg);
-        pid_t ch_pid = getpid();
-        syscall(PRINTTIME, ch_pid, start_sec, start_nsec, end_sec, end_nsec);
+        syscall(GET_TIME, &end_tv, NULL);
+        
+        syscall(PRINTTIME, ch_pid, start_tv.tv_sec, start_tv.tv_usec, end_tv.tv_sec, end_tv.tv_usec);
+        printf("[childinfo] pid %d start %lu.%09lu end %lu.%09lu\n",\
+         ch_pid, start_tv.tv_sec, start_tv.tv_usec, end_tv.tv_sec, end_tv.tv_usec);
         exit(0);
 	}
 
@@ -63,7 +64,7 @@ int proc_exec(struct process proc){
 	return pid;
 }
 
-int proc_block(int pid){
+int proc_block(pid_t pid){
 	struct sched_param param;
 	param.sched_priority = 0;
 
@@ -77,7 +78,7 @@ int proc_block(int pid){
 	return ret;
 }
 
-int proc_wakeup(int pid){
+int proc_wakeup(pid_t pid){
 	struct sched_param param;
 	param.sched_priority = 0;
 

@@ -47,7 +47,7 @@ int scheduling(struct process *proc, int nproc, int policy){
 #endif
 
     for(int i = 0; i < ntask; i++){
-	printf("%s, time: %d \n", proc[task_list[i].pid_index].name
+	printf("[table info] %s, time: %d \n", proc[task_list[i].pid_index].name
 	       , task_list[i].t_exec);
     }
 	
@@ -62,5 +62,5 @@ int scheduling(struct process *proc, int nproc, int policy){
     ntime = 0;
     running = -1;
     
-    return 1;
+    return ntask;
 }

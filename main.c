@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include "process.h"
 #include "scheduler.h"
+#include <sys/wait.h>
+
 //#include "FIFO.h"
 //#include "RR.h"
 //#include "SJF.h"
@@ -25,7 +27,7 @@ int main(int argc, char *argv[]){
 	char sched_policy[256];
 	int policy;
 	int nproc;
-	struct process *proc;
+	struct process *proc, *proc_fake;
 
 	scanf("%s", sched_policy);
 	scanf("%d", &nproc);
@@ -53,10 +55,61 @@ int main(int argc, char *argv[]){
 	}
 
 	qsort(proc, nproc, sizeof(struct process), cmp);
-        for(int i = 0; i < nproc; i++)
-    	    proc[i].task_i = i;
+    for(int i = 0; i < nproc; i++)
+		proc[i].task_i = i;
 	
-	scheduling(proc, nproc, policy);
+	proc_fake = (struct process *)malloc(nproc *sizeof(struct process));
+	for(int i = 0; i < nproc; i++)
+		proc_fake[i] = proc[i];
+	int ntask = scheduling(proc_fake, nproc, policy);
 
 	// TODO: run the sheduled processes.
+
+	// set parent process to parent cpu	
+	proc_assign_cpu(getpid(), PARENT_CPU);	
+	proc_wakeup(getpid());
+
+	// start
+	//unsigned long start_sec, start_nsec, end_sec, end_nsec;
+	//syscall(314, &start_sec, &start_nsec);
+
+	char* created = (char*)calloc(nproc, sizeof(char));
+	pid_t active_job = 0;
+	for (int i = 0; i < ntask; i++){
+		int jobID = task_list[i].pid_index;
+		struct process *job = &proc[jobID];
+
+		// first block the active job
+		if(active_job != 0){
+			// check if it's supposed to be finished.
+			if (job->t_exec <= 0)
+				waitpid(active_job, NULL, 0);
+			// if not, block it
+			else
+				proc_block(active_job);
+		}
+
+		// then change the active job
+		if(!created[jobID]){
+			pid_t ch_pid = proc_exec(*job);
+			job->pid = ch_pid;	
+			created[jobID] = 1;	
+			active_job = ch_pid;
+		}else{
+			pid_t ch_pid = job->pid;
+			proc_wakeup(ch_pid);
+			active_job = ch_pid;
+		}
+		
+
+		// wait for that specific amount of time.
+		job->t_exec -= task_list[i].t_exec;
+		for(int j = 0; j < task_list[i].t_exec; j++)
+			UNIT_T();
+	}
+	while(wait(NULL)>0);
+    //syscall(314, &end_sec, &end_nsec);
+    //pid_t ppid = getpid();
+    //syscall(333, ppid, start_sec, start_nsec, end_sec, end_nsec);
+        
 }

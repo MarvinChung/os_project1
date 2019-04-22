@@ -1,6 +1,7 @@
 # os project1 report
 ### 1. SJF 
 Design: Using a min heap to find the shortest job at each time step. Assuming the testing datas that will be sent to SJF.c are sorted by ready time in ascend order. If ready time are tie, then compare the execution time too.
+
 | testing data | output |
 | -------- | -------- |
 | ![](https://i.imgur.com/1s2b0um.png)| ![](https://i.imgur.com/p7cOX6Q.png)

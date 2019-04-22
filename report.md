@@ -11,7 +11,8 @@ Design: Using a min heap to find the shortest job at each time step. Assuming th
 |
 | ![](https://i.imgur.com/aBJAhsV.png) |![](https://i.imgur.com/Mf0Dk57.png)
 |
-|![](https://i.imgur.com/dRmn2b8.png) |![](https://i.imgur.com/4V5xpbY.png)
+|![](https://i.imgur.com/dRmn2b8.png) |![](https://i.imgur.com/4V5xpbY.png) 
+|
 
 Comparison: Only a little time difference. It may be caused by system i/o or some other consumption.
 

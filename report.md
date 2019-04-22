@@ -5,9 +5,13 @@ Design: Using a min heap to find the shortest job at each time step. Assuming th
 | testing data | output |
 | -------- | -------- |
 | ![](https://i.imgur.com/1s2b0um.png)| ![](https://i.imgur.com/p7cOX6Q.png) |
-| ![](https://i.imgur.com/fm6epxU.png)| ![](https://i.imgur.com/m8jSGnz.png) | 
+|
+| ![](https://i.imgur.com/fm6epxU.png)| ![](https://i.imgur.com/m8jSGnz.png) |
+|
 | ![](https://i.imgur.com/FOmBVWo.png) |![](https://i.imgur.com/4Mkxf4T.png) |
+|
 | ![](https://i.imgur.com/aBJAhsV.png) |![](https://i.imgur.com/Mf0Dk57.png) |
+|
 |![](https://i.imgur.com/dRmn2b8.png) |![](https://i.imgur.com/4V5xpbY.png) |
 
 Comparison: Only a little time difference. It may be caused by system i/o or some other consumption.

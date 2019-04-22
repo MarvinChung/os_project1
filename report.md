@@ -15,6 +15,9 @@ Design: Using a min heap to find the shortest job at each time step. Assuming th
 
 Comparison: Only a little time difference. It may be caused by system i/o or some other consumption.
 
-
-
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 

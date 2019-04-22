@@ -55,7 +55,7 @@ pid_t proc_exec(struct process proc){
         
         syscall(PRINTTIME, ch_pid, start_tv.tv_sec, start_tv.tv_usec, end_tv.tv_sec, end_tv.tv_usec);
         printf("[childinfo] pid %d start %lu.%09lu end %lu.%09lu\n",\
-         ch_pid, start_tv.tv_sec, start_tv.tv_usec, end_tv.tv_sec, end_tv.tv_usec);
+         ch_pid, start_tv.tv_sec, 1000*start_tv.tv_usec, end_tv.tv_sec, 1000*end_tv.tv_usec);
         exit(0);
 	}
 
